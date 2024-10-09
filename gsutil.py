@@ -23,6 +23,7 @@ from __future__ import unicode_literals
 import os
 import sys
 import warnings
+import subprocess
 
 # TODO: gsutil-beta: Distribute a pylint rc file.
 
@@ -35,6 +36,15 @@ if (ver.major == 2 and ver.minor < 7) or (ver.major == 3 and (ver.minor < 5 or v
     "\t1. Switch to Python 3.5-3.11 using your Python version manager or install an appropriate version.\n"
     "\t2. If you are unsure how to manage Python versions, visit [https://cloud.google.com/storage/docs/gsutil_install#specifications] for detailed instructions.".format(ver.major, ver.minor)
   )
+
+def get_argcomplete_version(submodule_status):
+  for line in submodule_status:
+    if 'argcomplete' in line:
+        return line.strip()
+  
+  return "Unknown"
+submodule_status = subprocess.getoutput("git submodule status").splitlines()
+print("Argcomplete version:", get_argcomplete_version(submodule_status))
 
 # setup a string to load the correct httplib2
 if sys.version_info.major == 2:
