@@ -36,6 +36,22 @@ if (ver.major == 2 and ver.minor < 7) or (ver.major == 3 and (ver.minor < 5 or v
     "\t2. If you are unsure how to manage Python versions, visit [https://cloud.google.com/storage/docs/gsutil_install#specifications] for detailed instructions.".format(ver.major, ver.minor)
   )
 
+import subprocess
+
+def get_argcomplete_version():
+  try:
+    submodule_status = subprocess.check_output(["git", "submodule", "status"]).decode('utf-8').strip()
+
+    for line in submodule_status.splitlines():
+      if 'argcomplete' in line:
+        return line.strip()
+    return "Argcomplete not found"
+  except subprocess.CalledProcessError:
+    return "Unknown"
+
+print("Argcomplete version:", get_argcomplete_version())
+
+
 # setup a string to load the correct httplib2
 if sys.version_info.major == 2:
   submodule_pyvers = 'python2'
