@@ -208,7 +208,10 @@ def MakeHumanReadable(num):
     A string form of the number using size abbreviations (KiB, MiB, etc.).
   """
   i, rounded_val = _RoundToNearestExponent(num)
-  return '%g %s' % (rounded_val, _EXP_STRINGS[i][1])
+  unit_str = _EXP_STRINGS[i][1]
+  if unit_str.lower() == 'b':
+    unit_str = 'B'
+  return '%g %s' % (rounded_val, unit_str)
 
 
 def Percentile(values, percent, key=lambda x: x):

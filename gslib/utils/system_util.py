@@ -244,7 +244,7 @@ def IsRunningInCiEnvironment():
 
 def IsRunningInteractively():
   """Returns True if currently running interactively on a TTY."""
-  return sys.stdout.isatty() and sys.stderr.isatty() and sys.stdin.isatty()
+  return sys.stdout.isatty() and sys.stderr.isatty()
 
 
 def MonkeyPatchHttp():
